@@ -1,15 +1,9 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Dimensions,
-  Animated,
-  Alert,
-} from "react-native";
+import { StyleSheet, View, Image, Dimensions, Animated } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import React from "react";
+///////// COMPONENTS /////////////
 import ButtonComp from "../components/Button";
+import TextComp from "../components/TextComp";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -53,7 +47,7 @@ const WelcomeScreen = ({ navigation }) => {
   const btnEvent = () => {
     // props.navigation.replace("HomeScreen");
     console.log(navigation);
-    navigation.navigate("HomeScreen");
+    navigation.replace("HomeScreen");
   };
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.primary }]}>
@@ -88,7 +82,10 @@ const WelcomeScreen = ({ navigation }) => {
                 alignItems: "center",
               }}
             >
-              <Text style={styles.headingTxt}>Welcome To Price Comparison</Text>
+              <TextComp
+                style={styles.headingTxt}
+                textValue="Welcome To Price Comparison"
+              />
             </View>
             <View
               style={{
@@ -98,10 +95,10 @@ const WelcomeScreen = ({ navigation }) => {
                 alignItems: "center",
               }}
             >
-              <Text style={styles.paraTxt}>
-                This price comparison app for products will help {"\n"} to
-                compare the price from various {"\n"} e-commerce websites,
-              </Text>
+              <TextComp
+                style={styles.paraTxt}
+                textValue={`This price comparison app for products will help ${"\n"} to compare the price from various ${"\n"} e-commerce websites,`}
+              />
             </View>
           </View>
           <View style={styles.btnContainer}>

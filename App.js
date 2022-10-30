@@ -2,29 +2,57 @@ import "react-native-gesture-handler";
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SplashScreen from "./src/screens/SplashScreen";
-import WelcomeScreen from "./src/screens/WelcomeScreen";
 import { useFonts } from "expo-font";
 import {
   MD3LightTheme as DefaultTheme,
   Provider as PaperProvider,
 } from "react-native-paper";
+import { Dimensions } from "react-native";
 import HomeScreen from "./src/screens/HomeScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { StatusBar } from "expo-status-bar";
+///////////////// SCREENS ////////////
+import SplashScreen from "./src/screens/SplashScreen";
+import WelcomeScreen from "./src/screens/WelcomeScreen";
 import Comparison from "./src/screens/Comparison";
 import DealsAndCoupons from "./src/screens/DealsAndCoupons";
 import AboutUs from "./src/screens/AboutUs";
 import FAQs from "./src/screens/FAQs";
 import ItemsLists from "./src/screens/ItemsLists";
+import DrawerScreens from "./src/components/DrawerScreens";
 
+////////////////// SETUP STACK AND DRAWER NAVIGATION
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
+////////////////////////// WINDOW WIDTH AND HEIGHT /////////////
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 /////////////////////////// DRAWER FUNCTION //////////////////
-function DrawerContent() {
+function DrawerContent(props) {
+  console.log("drawer app.js", props);
   return (
     <Drawer.Navigator
-      screenOptions={{ headerShown: false }}
+      screenOptions={{
+        headerShown: false,
+        drawerStyle: {
+          width: windowWidth,
+        },
+        drawerActiveTintColor: "transparent",
+        drawerLabelStyle: {
+          color: "white",
+          borderBottomColor: "white",
+          borderBottomWidth: 1,
+          fontSize: 16,
+          textAlign: "center",
+          width: "100%",
+          paddingVertical: 5,
+          paddingHorizontal: 20,
+        },
+      }}
       initialRouteName="Home"
+      drawerContent={(props) => {
+        return <DrawerScreens {...props} />;
+      }}
     >
       <Drawer.Screen name="Home" component={HomeScreen} />
       <Drawer.Screen name="Comparison" component={Comparison} />

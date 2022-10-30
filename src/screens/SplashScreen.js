@@ -1,13 +1,12 @@
 import {
   StyleSheet,
-  Text,
-  View,
   Dimensions,
   Animated,
   ImageBackground,
 } from "react-native";
 import React from "react";
 import { useTheme } from "react-native-paper";
+import TextComp from "../components/TextComp";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -40,7 +39,7 @@ const SplashScreen = (props) => {
         { opacity: fadeAnim },
       ]}
     >
-      <Text style={styles.text}>WELCOME</Text>
+      <TextComp style={styles.text} textValue="WELCOME" />
       <Animated.View style={[styles.overlay, { height: animateHeight }]}>
         <ImageBackground
           source={require("../../assets/images/waves.png")}

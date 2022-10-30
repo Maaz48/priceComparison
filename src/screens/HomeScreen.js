@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import React from "react";
 import * as Location from "expo-location";
-import { Appbar } from "react-native-paper";
+import { Appbar, useTheme, Surface } from "react-native-paper";
 import BadgeNotification from "../components/BadgeNotification";
+/////////////COMPONENTS ////////////
 import Button from "../components/Button";
-import { useTheme } from "react-native-paper";
+import TextComp from "../components/TextComp";
 
 const HomeScreen = ({ navigation }) => {
   ///////////////////// REACT ANTIVE PAPER //////////////
@@ -29,17 +30,21 @@ const HomeScreen = ({ navigation }) => {
   ///////////////////////////////////// CARDS DATA///////////////////////
   const data = [
     {
-      name: <Text style={styles.cardText}>Object{"\n"}Detection</Text>,
+      name: (
+        <TextComp style={styles.cardText} textValue={`Object \nDetection`} />
+      ),
       image: (
         <Image source={require("../../assets/images/objectDetection.png")} />
       ),
     },
     {
-      name: <Text style={styles.cardText}>List{"\n"}Search</Text>,
+      name: <TextComp style={styles.cardText} textValue={`List \nSearch`} />,
       image: <Image source={require("../../assets/images/list.png")} />,
     },
     {
-      name: <Text style={styles.cardText}>QR Code{"\n"}Detection</Text>,
+      name: (
+        <TextComp style={styles.cardText} textValue={`QR Code \nDetection`} />
+      ),
       image: <Image source={require("../../assets/images/qrCode.png")} />,
     },
   ];
@@ -106,10 +111,12 @@ const HomeScreen = ({ navigation }) => {
               >
                 <View style={styles.cardContainer}>
                   <View style={styles.cardOverLay}></View>
-                  <View style={styles.cardImage}>{printCArds.image}</View>
-                  <View style={styles.cardTextContainer}>
+                  <Surface elevation={2} style={styles.cardImage}>
+                    {printCArds.image}
+                  </Surface>
+                  <Surface elevation={2} style={styles.cardTextContainer}>
                     {printCArds.name}
-                  </View>
+                  </Surface>
                 </View>
               </Pressable>
             );
@@ -128,6 +135,8 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 0,
+    margin: 0,
   },
 
   bodyContainer: { flex: 1, backgroundColor: "#FEFEFD" },
@@ -161,7 +170,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    position: "relative",
+    backgroundColor: "white",
   },
   cardOverLay: {
     position: "absolute",
@@ -178,6 +187,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
   },
   cardTextContainer: {
     width: "60%",
@@ -186,6 +197,8 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     borderRadius: 10,
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
   },
   cardText: {
     color: "#080C15",
