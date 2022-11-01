@@ -52,7 +52,7 @@ const HomeScreen = ({ navigation }) => {
   ///////////////////////// SCREEN SETUP **CONVERSION SCREENS ** //////////////
   const conversionScreen = (e) => {
     if (e == 0) {
-      navigation.navigate("objectDetection");
+      navigation.navigate("ObjectDetection");
     } else if (e == 1) {
       navigation.navigate("ItemsLists");
     } else if (e == 2) {

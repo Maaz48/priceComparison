@@ -5,7 +5,7 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import TextComp from "../components/TextComp";
 import ButtonComp from "../components/Button";
 import ActivityIndicatorComp from "../components/ActivityIndicatorComp";
-const QrcodeScanner = () => {
+const QrcodeScanner = ({ navigation }) => {
   const theme = useTheme();
   const [hasPermission, sethasPermission] = useState(null);
   const [scanned, setscanned] = useState(false);
@@ -37,19 +37,12 @@ const QrcodeScanner = () => {
 
   return (
     <View style={styles.container}>
-      <Appbar.Header
-        style={{
-          backgroundColor: "#FEFEFD",
-          height: 40,
-          justifyContent: "center",
-          display:"flex"
-        }}
-      >
+      <Appbar.Header style={{ backgroundColor: "#FEFEFD", height: 50 }}>
         <Appbar.Action
-          icon="menu"
+          icon="keyboard-backspace"
           style={{ marginRight: "auto" }}
           onPress={() => {
-            console.log("adsda");
+            navigation.navigate("Home");
           }}
         />
       </Appbar.Header>

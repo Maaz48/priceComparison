@@ -3,7 +3,6 @@ import React from "react";
 import {
   DrawerItemList,
   DrawerContentScrollView,
-  DrawerItem,
 } from "@react-navigation/drawer";
 import { IconButton } from "react-native-paper";
 const DrawerScreens = (props) => {

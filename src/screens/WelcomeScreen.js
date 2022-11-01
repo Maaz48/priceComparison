@@ -1,5 +1,5 @@
 import { StyleSheet, View, Image, Dimensions, Animated } from "react-native";
-import { useTheme } from "react-native-paper";
+import { Button, useTheme } from "react-native-paper";
 import React from "react";
 ///////// COMPONENTS /////////////
 import ButtonComp from "../components/Button";
