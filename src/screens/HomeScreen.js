@@ -52,11 +52,11 @@ const HomeScreen = ({ navigation }) => {
   ///////////////////////// SCREEN SETUP **CONVERSION SCREENS ** //////////////
   const conversionScreen = (e) => {
     if (e == 0) {
-      console.log("GO TO OBJECT DETECTION SCREEN");
+      navigation.navigate("objectDetection");
     } else if (e == 1) {
-      navigation.replace("ItemsLists");
+      navigation.navigate("ItemsLists");
     } else if (e == 2) {
-      console.log("GO TO QR CODE SCREEN");
+      navigation.navigate("QrcodeScanner");
     }
   };
 

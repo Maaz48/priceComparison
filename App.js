@@ -7,10 +7,9 @@ import {
   MD3LightTheme as DefaultTheme,
   Provider as PaperProvider,
 } from "react-native-paper";
-import { Dimensions } from "react-native";
+import { Dimensions, SafeAreaView } from "react-native";
 import HomeScreen from "./src/screens/HomeScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { StatusBar } from "expo-status-bar";
 ///////////////// SCREENS ////////////
 import SplashScreen from "./src/screens/SplashScreen";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
@@ -18,8 +17,10 @@ import Comparison from "./src/screens/Comparison";
 import DealsAndCoupons from "./src/screens/DealsAndCoupons";
 import AboutUs from "./src/screens/AboutUs";
 import FAQs from "./src/screens/FAQs";
-import ItemsLists from "./src/screens/ItemsLists";
 import DrawerScreens from "./src/components/DrawerScreens";
+import ItemsLists from "./src/screens/ItemsLists";
+import ObjectDetection from "./src/screens/ObjectDetection";
+import QrcodeScanner from "./src/screens/QrcodeScanner";
 
 ////////////////// SETUP STACK AND DRAWER NAVIGATION
 const Stack = createNativeStackNavigator();
@@ -29,7 +30,6 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 /////////////////////////// DRAWER FUNCTION //////////////////
 function DrawerContent(props) {
-  console.log("drawer app.js", props);
   return (
     <Drawer.Navigator
       screenOptions={{
@@ -37,6 +37,7 @@ function DrawerContent(props) {
         drawerStyle: {
           width: windowWidth,
         },
+
         drawerActiveTintColor: "transparent",
         drawerLabelStyle: {
           color: "white",
@@ -44,9 +45,6 @@ function DrawerContent(props) {
           borderBottomWidth: 1,
           fontSize: 16,
           textAlign: "center",
-          width: "100%",
-          paddingVertical: 5,
-          paddingHorizontal: 20,
         },
       }}
       initialRouteName="Home"
@@ -86,39 +84,55 @@ function App() {
 
   return (
     <PaperProvider theme={theme}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Splash"
-          screenOptions={{ headerShown: false }}
-        >
-          <Stack.Screen
-            name="Splash"
-            component={SplashScreen}
-            options={{ title: "none" }}
-          />
-          <Stack.Screen
-            name="WelcomeScreen"
-            component={WelcomeScreen}
-            options={() => {
-              null;
-            }}
-          />
-          <Stack.Screen
-            name="HomeScreen"
-            component={DrawerContent}
-            options={() => {
-              null;
-            }}
-          />
-          <Stack.Screen
-            name="ItemsLists"
-            component={ItemsLists}
-            options={() => {
-              null;
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <SafeAreaView style={{ flex: 1 }}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Splash"
+            screenOptions={{ headerShown: false }}
+          >
+            <Stack.Screen
+              name="Splash"
+              component={SplashScreen}
+              options={{ title: "none" }}
+            />
+            <Stack.Screen
+              name="WelcomeScreen"
+              component={WelcomeScreen}
+              options={() => {
+                null;
+              }}
+            />
+            <Stack.Screen
+              name="HomeScreen"
+              component={DrawerContent}
+              options={() => {
+                null;
+              }}
+            />
+            <Stack.Screen
+              name="ItemsLists"
+              component={ItemsLists}
+              options={() => {
+                null;
+              }}
+            />
+            <Stack.Screen
+              name="objectDetection"
+              component={ObjectDetection}
+              options={() => {
+                null;
+              }}
+            />
+            <Stack.Screen
+              name="QrcodeScanner"
+              component={QrcodeScanner}
+              options={() => {
+                null;
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaView>
     </PaperProvider>
   );
 }

@@ -9,6 +9,7 @@ const ButtonComp = ({
   textColor,
   extraStyle,
   buttonValue,
+  loading,
 }) => {
   return (
     <>
@@ -19,6 +20,7 @@ const ButtonComp = ({
         style={extraStyle}
         disabled={isDisable}
         textColor={textColor}
+        loading={loading}
       >
         {buttonValue}
       </Button>
