@@ -1,14 +1,37 @@
-import { StyleSheet, View, Image, Dimensions, Animated } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Dimensions,
+  Animated,
+  PixelRatio,
+} from "react-native";
 import { useTheme } from "react-native-paper";
-import React from "react";
+import React, { useContext } from "react";
 ///////// COMPONENTS /////////////
 import ButtonComp from "../components/Button";
 import TextComp from "../components/TextComp";
+import ContextRapper from "../helper/context";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+// var heading_font = 30;
+// var paragraph_font = 30;
+// console.log("asdasd", PixelRatio.get());
+// if (PixelRatio.get() <= 2 && windowHeight <= 600) {
+//   heading_font = 22;
+// } else if (PixelRatio.get() <= 2) {
+//   heading_font = 45;
+// }
+// if (PixelRatio.get() <= 2 && windowHeight <= 600) {
+//   paragraph_font = 13;
+// } else if (PixelRatio.get() <= 2) {
+//   paragraph_font = 20;
+// }
 
 const WelcomeScreen = ({ navigation }) => {
+  //////////////// CONTEXt HOOK //////////
+  const contextApi = useContext(ContextRapper);
   /////////////////// THEME HOOK //////////////////
   const theme = useTheme();
   //////////////////  LOGO ANIMATION FROM MID TO TOP ///////////////////
@@ -32,12 +55,12 @@ const WelcomeScreen = ({ navigation }) => {
       useNativeDriver: false,
     }).start(() => {});
     Animated.timing(logoWidth, {
-      toValue: 170,
+      toValue: windowHeight <= 600 ? 170 : 240,
       duration: 1000,
       useNativeDriver: false,
     }).start(() => {});
     Animated.timing(logoHeight, {
-      toValue: 35,
+      toValue: windowHeight <= 600 ? 35 : 50,
       duration: 1000,
       useNativeDriver: false,
     }).start(() => {});
@@ -45,16 +68,22 @@ const WelcomeScreen = ({ navigation }) => {
 
   ////////////////////////// BUTTON EVENT CALL /////////////////
   const btnEvent = () => {
-    // props.navigation.replace("HomeScreen");
-    console.log(navigation);
     navigation.replace("HomeScreen");
   };
+  console.log("logoAnimation", logoAnimation);
+  console.log(
+    "contextApi.fontSize.headingFontSize",
+    contextApi.fontSize.headingFont
+  );
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.primary }]}>
       <Animated.View
         style={[
           styles.animatedLogoContainer,
-          { position: "absolute", top: logoAnimation },
+          {
+            position: "absolute",
+            top: logoAnimation,
+          },
         ]}
       >
         <Animated.Image
@@ -65,11 +94,15 @@ const WelcomeScreen = ({ navigation }) => {
           source={require("../../assets/images/logo.png")}
         />
       </Animated.View>
+      <View style={{ flex: 0.2 }}></View>
       {isVisible ? (
-        <>
-          <View style={styles.groceryImgContainer}>
+        <View style={{ flex: 0.8 }}>
+          <View style={[styles.groceryImgContainer, { alignItems: "center" }]}>
             <Image
-              style={styles.groceryImg}
+              style={[
+                styles.groceryImg,
+                { width: "100%", height: "100%", resizeMode: "contain" },
+              ]}
               source={require("../../assets/images/Grocery.png")}
             />
           </View>
@@ -83,7 +116,10 @@ const WelcomeScreen = ({ navigation }) => {
               }}
             >
               <TextComp
-                style={styles.headingTxt}
+                style={[
+                  styles.headingTxt,
+                  { fontSize: contextApi.fontSize.headingFont },
+                ]}
                 textValue="Welcome To Price Comparison"
               />
             </View>
@@ -96,7 +132,10 @@ const WelcomeScreen = ({ navigation }) => {
               }}
             >
               <TextComp
-                style={styles.paraTxt}
+                style={[
+                  styles.paraTxt,
+                  { fontSize: contextApi.fontSize.paragraphFont },
+                ]}
                 textValue={`This price comparison app for products will help ${"\n"} to compare the price from various ${"\n"} e-commerce websites,`}
               />
             </View>
@@ -110,9 +149,14 @@ const WelcomeScreen = ({ navigation }) => {
               textColor="white"
               extraStyle={[styles.btn, { backgroundColor: "#FE0D64" }]}
               buttonValue="Let's Start"
+              extraStyleText={{
+                fontSize: 22,
+                fontWeight: "800",
+                color: "white",
+              }}
             />
           </View>
-        </>
+        </View>
       ) : (
         ""
       )}
@@ -135,7 +179,10 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
   },
-  groceryImg: { width: 180, height: 250, marginTop: 80 },
+  groceryImg: {
+    width: PixelRatio.get() <= 2 && windowHeight <= 600 ? 150 : 400,
+    height: 500,
+  },
   txtContainer: {
     flex: 0.2,
     justifyContent: "center",
@@ -145,7 +192,6 @@ const styles = StyleSheet.create({
   headingTxt: {
     textAlign: "center",
     color: "white",
-    fontSize: 20,
     width: "100%",
     height: "100%",
     textAlignVertical: "center",
@@ -168,7 +214,7 @@ const styles = StyleSheet.create({
   btn: {
     width: "80%",
     margin: "auto",
-    height: 50,
+    height: windowHeight <= 600 ? 50 : "40%",
     justifyContent: "center",
     borderRadius: 20,
   },

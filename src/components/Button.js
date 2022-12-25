@@ -1,7 +1,7 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import React from "react";
 // import { Button } from "react-native-paper";
-import { Button } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 const ButtonComp = ({
   onClick,
   buttonType,
@@ -10,6 +10,7 @@ const ButtonComp = ({
   textColor,
   extraStyle,
   buttonValue,
+  extraStyleText,
 }) => {
   return (
     <>
@@ -21,7 +22,9 @@ const ButtonComp = ({
         disabled={isDisable}
         textColor={textColor}
       >
-        {buttonValue}
+        <Text style={[extraStyleText, { width: "100%", height: "100%" }]}>
+          {buttonValue}
+        </Text>
       </Button>
     </>
   );

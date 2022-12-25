@@ -7,6 +7,7 @@ const ActivityIndicatorComp = ({
   color,
   hidesWhenStopped,
   size,
+  style,
 }) => {
   return (
     <ActivityIndicator
@@ -14,6 +15,7 @@ const ActivityIndicatorComp = ({
       color={color}
       hidesWhenStopped={hidesWhenStopped}
       size={size}
+      style={style}
     />
   );
 };

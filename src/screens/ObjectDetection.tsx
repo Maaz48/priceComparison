@@ -30,7 +30,7 @@ export default function ObjectDetection() {
   const [hasPermission, setHasPermission] = useState<null | boolean>(null);
   const [detections, setDetections] = useState<string[]>([]);
   const [net, setNet] = useState<mobilenet.MobileNet>();
-
+  console.log("CHECK NET", net);
   const handleCameraStream = (images: IterableIterator<tf.Tensor3D>) => {
     const loop = async () => {
       if (net) {

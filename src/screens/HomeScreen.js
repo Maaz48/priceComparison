@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Pressable,
+  Dimensions,
+} from "react-native";
 import React from "react";
 import * as Location from "expo-location";
 import { Appbar, useTheme, Surface } from "react-native-paper";
@@ -7,6 +14,9 @@ import BadgeNotification from "../components/BadgeNotification";
 import Button from "../components/Button";
 import TextComp from "../components/TextComp";
 
+const { height, width } = Dimensions.get("window");
+console.log("height", height, "width", width);
+
 const HomeScreen = ({ navigation }) => {
   ///////////////////// REACT ANTIVE PAPER //////////////
   const theme = useTheme();
@@ -14,7 +24,7 @@ const HomeScreen = ({ navigation }) => {
   const [location, setLocation] = React.useState(null);
   const [errorMsg, setErrorMsg] = React.useState(null);
   React.useEffect(() => {
-    (async () => {
+    async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
@@ -23,8 +33,7 @@ const HomeScreen = ({ navigation }) => {
 
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-    })();
-    console.log(location);
+    };
   }, []);
 
   ///////////////////////////////////// CARDS DATA///////////////////////
@@ -34,18 +43,34 @@ const HomeScreen = ({ navigation }) => {
         <TextComp style={styles.cardText} textValue={`Object \nDetection`} />
       ),
       image: (
-        <Image source={require("../../assets/images/objectDetection.png")} />
+        <Image
+          style={styles.imageStyle}
+          source={require("../../assets/images/objectDetection.png")}
+        />
       ),
+      gotoScreen: "ObjectDetection",
     },
     {
       name: <TextComp style={styles.cardText} textValue={`List \nSearch`} />,
-      image: <Image source={require("../../assets/images/list.png")} />,
+      image: (
+        <Image
+          style={styles.imageStyle}
+          source={require("../../assets/images/list.png")}
+        />
+      ),
+      gotoScreen: "ItemsLists",
     },
     {
       name: (
         <TextComp style={styles.cardText} textValue={`QR Code \nDetection`} />
       ),
-      image: <Image source={require("../../assets/images/qrCode.png")} />,
+      image: (
+        <Image
+          style={styles.imageStyle}
+          source={require("../../assets/images/qrCode.png")}
+        />
+      ),
+      gotoScreen: "QrcodeScanner",
     },
   ];
 
@@ -68,7 +93,6 @@ const HomeScreen = ({ navigation }) => {
           style={{ marginRight: "auto" }}
           onPress={() => {
             navigation.openDrawer();
-            console.log("clicked");
           }}
         />
         <BadgeNotification
@@ -77,7 +101,7 @@ const HomeScreen = ({ navigation }) => {
           notifyValue={4}
           badgeIcon="bell-outline"
           onPress={() => {
-            console.log("asdasd");
+            console.log("badge clicked");
           }}
           isVisible={true}
         />
@@ -88,7 +112,9 @@ const HomeScreen = ({ navigation }) => {
             <Button
               buttonIcon="google-maps"
               buttonValue="Your Current, Location"
-              extraStyle={styles.location}
+              extraStyleText={{
+                fontSize: height <= 600 ? 12 : 20,
+              }}
             />
           </View>
           <View style={styles.heading}>
@@ -101,9 +127,8 @@ const HomeScreen = ({ navigation }) => {
         {/* ///////////////////// OPTIONS SELECTION CARDS //////////////// */}
         <View
           style={{
-            flex: 1,
-            justifyContent: "space-evenly",
-            paddingHorizontal: 20,
+            height: "70%",
+            justifyContent: "space-around",
           }}
         >
           {data.map((printCArds, index) => {
@@ -116,14 +141,14 @@ const HomeScreen = ({ navigation }) => {
                 }}
               >
                 <Surface
-                  elevation={4}
+                  elevation={2}
                   style={{
                     paddingHorizontal: 10,
                     paddingVertical: 10,
                     backgroundColor: "white",
                     borderRadius: 20,
-                    minHeight: 120,
-                    maxHeight: 150,
+                    height: height <= 600 ? "100%" : 100 + (height - 600),
+                    maxHeight: 200,
                   }}
                 >
                   <View
@@ -136,8 +161,8 @@ const HomeScreen = ({ navigation }) => {
                     <View
                       style={{
                         backgroundColor: "#FD0C63",
-                        width: "30%",
-                        height: "100%",
+                        width: "40%",
+                        // height: "100%",
                         borderRadius: 15,
                         justifyContent: "center",
                         alignItems: "center",
@@ -148,7 +173,7 @@ const HomeScreen = ({ navigation }) => {
                     <View
                       style={{
                         width: "70%",
-                        paddingLeft: 50,
+                        paddingLeft: 30,
                         justifyContent: "center",
                       }}
                     >
@@ -160,8 +185,17 @@ const HomeScreen = ({ navigation }) => {
             );
           })}
         </View>
-        <View style={{ paddingVertical: 10 }}>
-          <Text style={{ textAlign: "center" }}>Price Comparison</Text>
+        <View
+          style={{
+            height: "20%",
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ fontSize: height <= 600 ? 16 : 24 }}>
+            Price Comparison
+          </Text>
         </View>
       </View>
     </View>
@@ -177,32 +211,37 @@ const styles = StyleSheet.create({
     margin: 0,
   },
 
-  bodyContainer: { flex: 1, backgroundColor: "#FEFEFD" },
+  bodyContainer: { height: "100%" },
   heading: {
     justifyContent: "center",
     alignItems: "center",
   },
   textContainer: {
-    flex: 0.1,
+    height: "10%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   spanElement: {
     color: "#080C15",
-    fontSize: 22,
+    fontSize: height <= 600 ? 16 : 40,
   },
   headingElement: {
     color: "#080C15",
     fontWeight: "800",
-    fontSize: 22,
+    fontSize: height <= 600 ? 16 : 40,
   },
-  location: { fontSize: 11, fontWeight: "100", color: "black" },
   buttonContainer: {
-    flex: 0.2,
-    paddingHorizontal: 30,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "25%",
+    paddingHorizontal: "10%",
   },
 
   cardText: {
     color: "#080C15",
-    fontSize: 25,
+    fontSize: height <= 600 ? 25 : 45,
     fontWeight: "100",
   },
 });

@@ -22,6 +22,7 @@ const QrcodeScanner = ({ navigation }) => {
 
   const handleBarCodeScan = ({ type, data }) => {
     setscanned(true);
+    //////////////////// SCAN QR CODE VALUE ////////////////
     console.log("TYPE", type, "data", data);
   };
 
@@ -55,7 +56,13 @@ const QrcodeScanner = ({ navigation }) => {
           />
         </View>
         <View
-          style={{ flex: 0.6, justifyContent: "center", alignItems: "center" }}
+          style={{
+            flex: 0.6,
+            justifyContent: "center",
+            alignItems: "center",
+            paddingHorizontal: 20,
+            paddingVertical: 40,
+          }}
         >
           {hasPermission === null ? (
             <ActivityIndicatorComp animating={true} color="red" size={100} />
@@ -65,8 +72,8 @@ const QrcodeScanner = ({ navigation }) => {
             <BarCodeScanner
               onBarCodeScanned={scanned ? undefined : handleBarCodeScan}
               style={{
-                minWidth: 300,
-                minHeight: 300,
+                minWidth: "100%",
+                minHeight: "100%",
               }}
             />
           )}
@@ -103,7 +110,9 @@ const styles = StyleSheet.create({
     flex: 0.2,
     justifyContent: "flex-end",
     alignItems: "center",
-    paddingBottom: 30,
+    paddingBottom: 100,
+    // height: "100%",
+    // marginBottom:100
   },
   headingStyle: { fontSize: 18, marginVertical: 10, fontWeight: "700" },
   subtitleStyle: {

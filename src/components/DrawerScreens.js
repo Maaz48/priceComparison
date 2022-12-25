@@ -1,31 +1,52 @@
-import { StyleSheet, View, ImageBackground } from "react-native";
+import { StyleSheet, View, ImageBackground, Dimensions } from "react-native";
 import React from "react";
 import {
   DrawerItemList,
   DrawerContentScrollView,
 } from "@react-navigation/drawer";
 import { IconButton } from "react-native-paper";
+
+const { height, width } = Dimensions.get("window");
+
 const DrawerScreens = (props) => {
   return (
-    <ImageBackground
-      resizeMode="cover"
-      source={require("../../assets/images/drawerBgImage.png")}
-      style={{ flex: 1 }}
+    <View
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100%",
+        width: "100%",
+      }}
     >
-      <View style={styles.overLay}></View>
-      <View style={{ flex: 0.3 }}></View>
-      <DrawerContentScrollView>
-        <DrawerItemList {...props} />
-      </DrawerContentScrollView>
-      <View style={styles.btnContainer}>
-        <IconButton
-          icon="close"
-          iconColor="white"
-          size={30}
-          onPress={() => props.navigation.closeDrawer()}
-        />
-      </View>
-    </ImageBackground>
+      <ImageBackground
+        resizeMode="cover"
+        source={require("../../assets/images/drawerBgImage.png")}
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        <View style={styles.overLay}></View>
+        <View style={{ height: "20%" }}></View>
+        <View style={{ width: "100%", height: "60%" }}>
+          <DrawerContentScrollView>
+            <DrawerItemList {...props} />
+          </DrawerContentScrollView>
+          <View
+            style={{ width: "100%", display: "flex", alignItems: "center" }}
+          >
+            <IconButton
+              icon="close"
+              iconColor="white"
+              size={height <= 600 ? 30 : 50}
+              onPress={() => props.navigation.closeDrawer()}
+            />
+          </View>
+        </View>
+        <View style={{ height: "20%" }}></View>
+      </ImageBackground>
+    </View>
   );
 };
 
